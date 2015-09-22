@@ -106,7 +106,11 @@ static void TLV_DebugSubNode(struct TLVNode* parent,int step)
 	}
 }
 
-void TLV_DebugNode(struct TLVNode* node)
+/**
+ * DEBUG TLVNode
+ * @param node [description]
+ */
+void TLV_Debug(struct TLVNode* node)
 {
 	int i;
 	printf("\n************************BEGIN TLV DEBUG************************\n");
@@ -120,6 +124,10 @@ void TLV_DebugNode(struct TLVNode* node)
 	if(node->SubFlag == 1)
 	{
 		TLV_DebugSubNode(node,1);
+	}
+	if(node->Next)
+	{
+		printf("Next=[%p]\n",node->Next);
 	}
 	printf("************************END TLV DEBUG************************\n");
 }
@@ -243,6 +251,7 @@ static int TLV_Parse_SubNodes(struct TLVNode* parent)
  */
 static void TLV_Parse_Sub(struct TLVNode* parent)
 {
+	int i;
 	if(parent->SubFlag != 0)
 	{
 		//parse sub nodes.
@@ -251,7 +260,6 @@ static void TLV_Parse_Sub(struct TLVNode* parent)
 
 		}
 		
-		int i;
 		for(i=0;i<parent->SubCount;i++)
 		{
 			if(parent->Sub[i]->SubFlag != 0)
@@ -307,7 +315,7 @@ void TLV_Merge(struct TLVNode* target,struct TLVNode* src)
 	int found = 0;
 	struct TLVNode* tmpnode = target;
 	assert(target != NULL);
-	while(1)
+	while(tmpnode)
 	{
 		//只比较一级tag是否相同,子tag必须是不同的
 		if(tmpnode->Tag == src->Tag)

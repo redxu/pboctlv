@@ -56,7 +56,11 @@ struct TLVNode* TLV_Find(struct TLVNode* node,uint16_t tag);
  */
 void TLV_Free(struct TLVNode* node);
 
-void TLV_DebugNode(struct TLVNode* node);
+/**
+ * DEBUG TLVNode
+ * @param node [description]
+ */
+void TLV_Debug(struct TLVNode* node);
 
 
 #ifdef __cplusplus
